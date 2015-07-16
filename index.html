@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>WikiTree Watchlist FS Matching</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="fs-match.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <h1>Match WikiTree Watchlist to FamilySearch Family Tree</h1>
+      
+      <p>Match persons in your WikiTree watchlist to persons in the FamilySearch
+      Family Tree. No data is exchanged. A link to the person in the FamilySearch
+      tree is saved in the person's WikiTree profile.</p>
+    
+      <h2>1. WikiTree</h3>
+    
+      <div id="wtAuth" class="row">        
+        <div class="col-md-4">          
+          <div class="form-group">
+            <label for="wtEmail">Email</label>
+            <input type="email" class="form-control" id="wtEmail" placeholder="email">
+          </div>
+          <div class="form-group">
+            <label for="wtPassword">Password</label>
+            <input type="password" class="form-control" id="wtPassword" placeholder="password">
+          </div>
+          <div class="form-group">
+            <button id="wtSignInBtn" class="btn btn-primary">Sign In</button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="wtSignedIn" class="alert alert-success">
+        <p>Signed in with WikiTree as <span id="wtUserName">{{username}}</span></p>
+      </div>
+      
+      <h2>2. FamilySearch</h3>
+      
+      <div id="fsAuth">        
+        <button id="fsSignIn" class="btn btn-primary disabled" disabled data-active-text="Sign In">Loading...</button>
+      </div>
+      
+      <div id="fsSignedIn" class="alert alert-success">
+        <p>Signed in with FamilySearch as <span id="fsUserName">{{username}}</span></p>
+      </div>
+      
+      <h2>3. WikiTree Watchlist</h3>
+      <div id="wtWatchlistWrapper"></div>
+      <div id="wtWatchlistNoauth" class="alert alert-warning">
+        <p>Sign in to both WikiTree and FamilySearch before loading your watchlist.</p>
+      </div>
+      
+      <div id="loader">
+        <img src="ajax-loader-big-circle-ball-777-fff.gif" />
+      </div>
+      
+    </div>
+    
+    <!-- Handlebars templates -->
+    
+    <script id="watchlist-entry" type="text/x-handlebars-template">
+      <div class="list-group-item watchlist-entry">
+        <div class="row">
+          <div class="col-md-4 col-sm-6">
+            <h3><a target="_blank" href="{{url}}">{{name}}</a></h3>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="text-muted">Birth</div>
+                <div>{{birthDate}}</div>
+                <div>{{birthPlace}}</div>
+              </div>
+              <div class="col-sm-6">
+                <div class="text-muted">Death</div>
+                <div>{{deathDate}}</div>
+                <div>{{deathPlace}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 existing-matches">
+            <h4>Existing Matches</h4>
+            <img class="loader" src="ajax-loader-circle-ball-777-fff.gif" />
+            <p class="text-muted no-existing-matches-message">No existing matches with FamilySearch.</p>
+            <div class="existing-match-results"></div>
+          </div>            
+          <div class="col-md-4 col-sm-12 possible-matches">
+            <h4>Possible Matches</h4>
+            <button data-loading-text="Matching..." class="btn btn-primary btn-sm fs-matches-btn">Search for Matches</button>
+            <p class="text-muted no-fs-matches-message">We could not find any possible matches in the FamilySearch tree.</p>
+            <div class="possible-match-results"></div>
+          </div>
+        </div>
+      </div>
+    </script>
+    
+    <script id="match-template" type="text/x-handlebars-template">
+      <div class="potential-match">
+        <strong><a class="fs-link" href="{{ark}}" target="_blank">{{name}}</a></strong>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="text-muted">Birth</div>
+            <div>{{birthDate}}</div>
+            <div>{{birthPlace}}</div>
+          </div>
+          <div class="col-sm-6">
+            <div class="text-muted">Death</div>
+            <div>{{deathDate}}</div>
+            <div>{{deathPlace}}</div>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-xs pull-right" data-loading-text="Creating Match...">Match</button>
+      </div>
+    </script>
+    
+    <script id="existing-match-template" type="text/x-handlebars-template">
+      <div>
+        <a class="fs-link" href="https://sandbox.familysearch.org/tree/#view=ancestor&person={{id}}" target="_blank">{{id}}</a>
+        <span class="text-muted certainty"> &middot; {{certainty}} &middot; </span>
+        <a class="remove-match" href>remove</a>
+        <img class="loader" src="ajax-loader-circle-ball-777-fff.gif" />
+      </div>
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.3/handlebars.min.js"></script>
+    <script src="//rawgit.com/justincy/wikitree-javascript-sdk/master/wikitree.js"></script>
+    <!-- <script src="//preview.c9.io/justincy/wikitree-javascript-sdk/wikitree.js"></script> -->
+    <script src="//cdn.jsdelivr.net/familysearch-javascript-sdk/1.0.0/familysearch-javascript-sdk.min.js"></script>
+    <script src="fs-match.js"></script>
+  </body>
+</html>
