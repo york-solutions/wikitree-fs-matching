@@ -94,8 +94,10 @@ WatchlistEntry.prototype.renderFSMatches = function(){
   }
   $.each(this.fsMatches, function(i, fsResult){
     var resultId = fsResult.$getPrimaryPerson().id;
+    
     // Ignore existing connections
-    if(!existingFsIds[resultId]){
+    // Filter out low confidence matches
+    if(!existingFsIds[resultId] && fsResult.confidence >= 3){
       $resultsTable.append(new Match(self.wtPerson, fsResult).getDOM());
       count++;
     }
