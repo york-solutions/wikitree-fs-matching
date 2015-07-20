@@ -25,39 +25,48 @@
       tree is saved in the person's WikiTree profile. 
       <a href="http://www.wikitree.com/wiki/FamilySearch_Connections" target="_blank">more info <span class="glyphicon glyphicon-question-sign"></span></a></p>
     
-      <h2>1. WikiTree</h3>
+      <div id="auth" class="row">
     
-      <div id="wtAuth" class="row">        
-        <div class="col-md-4">          
-          <div class="form-group">
-            <label for="wtEmail">Email</label>
-            <input type="email" class="form-control" id="wtEmail" placeholder="email">
+        <div class="col-sm-6">
+          <div class="well">
+            <h2>WikiTree</h3>
+            <div id="wtAuth" class="row">        
+              <div class="col-md-6">          
+                <div class="form-group">
+                  <label for="wtEmail">Email</label>
+                  <input type="email" class="form-control" id="wtEmail" placeholder="email">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="wtPassword">Password</label>
+                  <input type="password" class="form-control" id="wtPassword" placeholder="password">
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <button id="wtSignInBtn" class="btn btn-primary">Sign In</button>
+              </div>
+            </div>
+            <div id="wtSignedIn" class="alert alert-success">
+              <p>Signed in with WikiTree as <span id="wtUserName">{{username}}</span></p>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="wtPassword">Password</label>
-            <input type="password" class="form-control" id="wtPassword" placeholder="password">
-          </div>
-          <div class="form-group">
-            <button id="wtSignInBtn" class="btn btn-primary">Sign In</button>
+        </div>
+        
+        <div class="col-sm-6">
+          <div class="well">
+            <h2>FamilySearch</h3>
+            <div id="fsAuth">        
+              <button id="fsSignIn" class="btn btn-primary disabled" disabled data-active-text="Sign In">Loading...</button>
+            </div>
+            <div id="fsSignedIn" class="alert alert-success">
+              <p>Signed in with FamilySearch as <span id="fsUserName">{{username}}</span></p>
+            </div>
           </div>
         </div>
       </div>
       
-      <div id="wtSignedIn" class="alert alert-success">
-        <p>Signed in with WikiTree as <span id="wtUserName">{{username}}</span></p>
-      </div>
-      
-      <h2>2. FamilySearch</h3>
-      
-      <div id="fsAuth">        
-        <button id="fsSignIn" class="btn btn-primary disabled" disabled data-active-text="Sign In">Loading...</button>
-      </div>
-      
-      <div id="fsSignedIn" class="alert alert-success">
-        <p>Signed in with FamilySearch as <span id="fsUserName">{{username}}</span></p>
-      </div>
-      
-      <h2>3. WikiTree Watchlist</h3>
+      <h2>WikiTree Watchlist</h3>
       <div id="wtWatchlistWrapper"></div>
       <div id="wtWatchlistNoauth" class="alert alert-warning">
         <p>Sign in to both WikiTree and FamilySearch before loading your watchlist.</p>

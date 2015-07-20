@@ -1,3 +1,15 @@
+#auth {
+  margin-top: 30px;
+}
+
+#auth h2 {
+  margin-top: 0;
+}
+
+#auth .alert {
+  margin-bottom: 0;
+}
+
 #wtWatchlistReady, 
 #wtSignedIn,
 #fsSignedIn {
