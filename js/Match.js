@@ -49,8 +49,10 @@ Match.prototype.render = function(){
 Match.prototype.saveMatch = function(){
   var self = this,
       deferred = $.Deferred();
-  getFSPersonLastModified(self.fsId).done(function(timestamp){
-    wikitree.addPersonFSConnection(self.wtPerson.getId(), self.fsId, timestamp, self.$dom.find('.certainty').val()).done(function(connection){
+  getFSPersonLastModified(self.fsId).done(function(date){
+    var timestamp = date.toISOString().slice(0, 19).replace('T', ' ');
+    var certainty = self.$dom.find('.certainty').val();
+    wikitree.addPersonFSConnection(self.wtPerson.getId(), self.fsId, timestamp, certainty).done(function(connection){
       self.$dom.remove();
       deferred.resolve();
       watchlist.getEntry(self.wtPerson.getId()).addWTMatch(connection);

@@ -121,12 +121,13 @@ function fsMatchParams(wtPerson){
 
 function getFSPersonLastModified(fsId){
   var deferred = $.Deferred(),
-      promise = fsClient.http('HEAD', '/platform/tree/persons/' + fsId);
+      promise = fsClient.http('HEAD', '/platform/tree/persons/' + fsId + '?_breaker=' + Math.random());
   promise.done(function(){
-    try {
-      deferred.resolve(new Date(promise.getResponseHeader('Last-Modified')).getTime());
-    } catch(e) {
-      deferred.reject(e);
+    var date = new Date(promise.getResponseHeader('Last-Modified'));
+    if(!isNaN(date.getTime())) {
+      deferred.resolve(date);
+    } else {
+      deferred.reject();
     }
   });
   return deferred.promise();
