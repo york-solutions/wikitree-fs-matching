@@ -8,7 +8,7 @@ var Watchlist = function(selector){
   
   this.entries = {};
   this.offset = 0;
-  this.limit = 5;
+  this.limit = 25;
   this.order = 'user_last_name_current';
   
   this.render();
@@ -20,7 +20,7 @@ Watchlist.template = Handlebars.compile($('#watchlist').html());
 Watchlist.prototype.render = function(){
   var self = this;
   self.$dom = $(Watchlist.template()).appendTo(self.$container);
-  self.$list = self.$dom.find('.list-group');
+  self.$list = self.$dom.find('.watchlist');
   self.$prev = self.$dom.find('.prev').click(function(){
     self.prev();
   });

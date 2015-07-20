@@ -30,6 +30,10 @@ ExistingMatch.prototype.getFSPerson = function(){
   fsClient.getPerson(this.connection.mFSId).done(function(response){
     var fsPerson = response.getPerson();
     self.$dom.find('.fs-link').text(fsPerson.$getDisplayName());
+    self.$dom.find('.birth-date').text(fsPerson.$getBirthDate());
+    self.$dom.find('.birth-place').text(fsPerson.$getBirthPlace());
+    self.$dom.find('.death-date').text(fsPerson.$getDeathDate());
+    self.$dom.find('.death-place').text(fsPerson.$getDeathPlace());
     self.$dom.find('.loader').hide();
   });
 };

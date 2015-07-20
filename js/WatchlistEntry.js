@@ -7,6 +7,7 @@ var WatchlistEntry = function(wtPerson){
   this.fsMatches = [];
   this.render();
   this.getWTMatches();
+  this.getPossibleFSMatches();
 };
 
 WatchlistEntry.template = Handlebars.compile($('#watchlist-entry').html());
