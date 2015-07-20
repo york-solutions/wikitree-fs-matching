@@ -5,36 +5,28 @@
  */
 var Watchlist = function(selector){
   this.$container = $(selector);
+  
   this.entries = {};
   this.offset = 0;
   this.limit = 5;
   this.order = 'user_last_name_current';
+  
   this.render();
   this.load();
 };
 
+Watchlist.template = Handlebars.compile($('#watchlist').html());
+
 Watchlist.prototype.render = function(){
   var self = this;
-  self.$list = $('<div>')
-    .appendTo(self.$container)
-    .addClass('list-group');
-  var $buttons = $('<div>')
-    .addClass('wt-pagination')
-    .appendTo(self.$container);
-  self.$prev = $('<button>')
-    .addClass('btn btn-primary prev')
-    .text('< Prev')
-    .appendTo($buttons)
-    .click(function(){
-      self.prev();
-    });
-  self.$next = $('<button>')
-    .addClass('btn btn-primary next')
-    .text('Next >')
-    .appendTo($buttons)
-    .click(function(){
-      self.next();
-    });
+  self.$dom = $(Watchlist.template()).appendTo(self.$container);
+  self.$list = self.$dom.find('.list-group');
+  self.$prev = self.$dom.find('.prev').click(function(){
+    self.prev();
+  });
+  self.$next = self.$dom.find('.next').click(function(){
+    self.next();
+  });
 };
 
 Watchlist.prototype.next = function(){
@@ -62,7 +54,7 @@ Watchlist.prototype.load = function(){
   }).done(function(persons){      
     $.each(persons, function(i, person){
       if(!person.isLiving()){
-        watchlist.addWTPerson(person);
+        self.addWTPerson(person);
       }
     });
     self.prevState();
