@@ -50,7 +50,7 @@ Match.prototype.saveMatch = function(){
   var self = this,
       deferred = $.Deferred();
   getFSPersonLastModified(self.fsId).done(function(timestamp){
-    wikitree.addPersonFSConnection(self.wtPerson.getId(), self.fsId, timestamp, 'certain').done(function(connection){
+    wikitree.addPersonFSConnection(self.wtPerson.getId(), self.fsId, timestamp, self.$dom.find('.certainty').val()).done(function(connection){
       self.$dom.remove();
       deferred.resolve();
       watchlist.getEntry(self.wtPerson.getId()).addWTMatch(connection);
