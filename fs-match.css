@@ -30,6 +30,10 @@
   font-size: 20px;
 }
 
+.watchlist-entry .panel-title a {
+  color: #337ab7;
+}
+
 .no-existing-matches-message,
 .no-fs-matches-message {
   display: none;

@@ -2,6 +2,7 @@
  * Manage the DOM for an entry in the Watchlist.
  */
 var WatchlistEntry = function(wtPerson){
+  this.fsConfidenceThreshold = 3;
   this.wtPerson = wtPerson;
   this.connections = [];
   this.fsMatches = [];
@@ -17,6 +18,7 @@ WatchlistEntry.prototype.render = function(){
       person = self.wtPerson;
   self.$dom = $(WatchlistEntry.template({
     name: person.getDisplayName(),
+    id: person.getName(),
     url: wikitree.API_DOMAIN + '/wiki/' + person.getName(),
     birthDate: person.getBirthDateDisplay(),
     birthPlace: person.getBirthLocation(),
@@ -98,7 +100,7 @@ WatchlistEntry.prototype.renderFSMatches = function(){
     
     // Ignore existing connections
     // Filter out low confidence matches
-    if(!existingFsIds[resultId] && fsResult.confidence >= 3){
+    if(!existingFsIds[resultId] && fsResult.confidence >= self.fsConfidenceThreshold){
       $resultsTable.append(new Match(self.wtPerson, fsResult).getDOM());
       count++;
     }

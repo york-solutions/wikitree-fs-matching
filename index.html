@@ -99,6 +99,9 @@
           <div class="list-group-item">
             <div class="row">
               <div class="col-sm-3">
+                {{id}}
+              </div>
+              <div class="col-sm-3">
                 <div class="text-muted">Birth</div>
                 <div>{{birthDate}}</div>
                 <div>{{birthPlace}}</div>
@@ -126,7 +129,7 @@
       </div>
     </script>
     
-    <script id="match-template" type="text/x-handlebars-template">
+    <script id="potential-match-template" type="text/x-handlebars-template">
       <div class="match potential-match">
         <div class="row">
           <div class="col-sm-2">
@@ -163,7 +166,11 @@
       <div class="match existing-match">
         <div class="row">
           <div class="col-sm-3">
-            <div><a class="fs-link" href="https://familysearch.org/tree/#view=ancestor&person={{id}}" target="_blank"><img class="loader" src="ajax-loader-circle-ball-777-fff.gif" /></a></div>
+            <div>
+              <strong><a class="fs-link" href="https://familysearch.org/tree/#view=ancestor&person={{id}}" target="_blank">
+                <img class="loader" src="ajax-loader-circle-ball-777-fff.gif" />
+              </a></strong>
+            </div>
             <div class="text-muted">{{id}}</div>
             <div class="text-muted">{{certainty}}</div>
           </div>

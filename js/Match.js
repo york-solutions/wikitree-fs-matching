@@ -9,7 +9,7 @@ var Match = function(wtPerson, match){
   this.render();
 };
 
-Match.template = Handlebars.compile($('#match-template').html());
+Match.template = Handlebars.compile($('#potential-match-template').html());
 
 Match.prototype.render = function(){
   var self = this,
