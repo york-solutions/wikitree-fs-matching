@@ -132,20 +132,21 @@
     <script id="potential-match-template" type="text/x-handlebars-template">
       <div class="match potential-match">
         <div class="row">
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             <div><strong><a class="fs-link" href="{{ark}}" target="_blank">{{name}}</a></strong></div>
             <div class="text-muted">{{id}}</div>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             <div class="text-muted">Birth</div>
             <div>{{birthDate}}</div>
             <div>{{birthPlace}}</div>
           </div>
-          <div class="col-sm-2">
+          <div class="col-sm-3">
             <div class="text-muted">Death</div>
             <div>{{deathDate}}</div>
             <div>{{deathPlace}}</div>
           </div>
+          <!--
           <div class="col-sm-2">
             <div class="text-muted">Parents</div>
             <div>{{fatherName}}</div>
@@ -155,11 +156,12 @@
             <div class="text-muted">Spouse</div>
             <div>{{spouseName}}</div>
           </div>
-          <div class="col-sm-2 text-right">
+          -->
+          <div class="col-sm-3 text-right">
             <select class="certainty">
               <option value="certain">Certain</option>
               <option value="uncertain">Uncertain</option>
-            </select>
+            </select><br>
             <button class="btn btn-primary btn-sm" data-loading-text="Creating Match...">Create Match</button>          
           </div>
         </div>
