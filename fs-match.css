@@ -66,3 +66,13 @@
 .wt-pagination .next {
   float: right;
 }
+
+#footer {
+  margin: 20px 0;
+  overflow: auto;
+  text-align: center;
+}
+
+#footer .certified {
+  height: 50px;
+}
