@@ -108,15 +108,31 @@ function wtWatchlistReady(){
 };
 
 function fsMatchParams(wtPerson){
-  return {
-    givenName: wtPerson.getFirstName(),
-    surname: wtPerson.getLastNameCurrent(),
-    gender: wtPerson.getGender(),
-    birthDate: wtPerson.getBirthDate(),
-    birthPlace: wtPerson.getBirthLocation(),
-    deathDate: wtPerson.getDeathDate(),
-    deathPlace: wtPerson.getDeathLocation()
-  };
+  var father = wtPerson.getFather(),
+      mother = wtPerson.getMother(),
+      spouse = wtPerson.getSpouse(),
+      params = {
+        givenName: wtPerson.getFirstName(),
+        surname: wtPerson.getLastNameCurrent(),
+        gender: wtPerson.getGender(),
+        birthDate: wtPerson.getBirthDate(),
+        birthPlace: wtPerson.getBirthLocation(),
+        deathDate: wtPerson.getDeathDate(),
+        deathPlace: wtPerson.getDeathLocation()
+      };
+      
+  addFSMatchParams(params, father, 'father');
+  addFSMatchParams(params, mother, 'mother');
+  addFSMatchParams(params, spouse, 'spouse');
+      
+  return params;
+};
+
+function addFSMatchParams(params, wtPerson, relation){
+  if(wtPerson){
+    params[relation + 'GivenName'] = wtPerson.getFirstName();
+    params[relation + 'Surname'] = wtPerson.getLastNameCurrent();
+  }
 };
 
 function getFSPersonLastModified(fsId){

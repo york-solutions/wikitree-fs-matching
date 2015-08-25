@@ -15,7 +15,10 @@ WatchlistEntry.template = Handlebars.compile($('#watchlist-entry').html());
 
 WatchlistEntry.prototype.render = function(){
   var self = this,
-      person = self.wtPerson;
+      person = self.wtPerson,
+      father = person.getFather(),
+      mother = person.getMother(),
+      spouse = person.getSpouse();
   self.$dom = $(WatchlistEntry.template({
     name: person.getDisplayName(),
     id: person.getName(),
@@ -23,7 +26,10 @@ WatchlistEntry.prototype.render = function(){
     birthDate: person.getBirthDateDisplay(),
     birthPlace: person.getBirthLocation(),
     deathDate: person.getDeathDateDisplay(),
-    deathPlace: person.getDeathLocation()
+    deathPlace: person.getDeathLocation(),
+    fatherName: father ? father.getDisplayName() : '',
+    motherName: mother ? mother.getDisplayName() : '',
+    spouseName: spouse ? spouse.getDisplayName() : ''
   }));
   self.$searchButton = $('.fs-matches-btn', self.$dom).click(function(){
     self.getPossibleFSMatches();
