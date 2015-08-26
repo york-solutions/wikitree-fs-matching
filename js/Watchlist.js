@@ -60,8 +60,8 @@ Watchlist.prototype.load = function(){
     }
     
     wikitree.getRelatives(ids, true, true).then(function(persons){
-      for(var i in persons){
-        self.addWTPerson(persons[i]);
+      for(var i = 0; i < ids.length; i++){
+        self.addWTPerson(persons[ids[i]]);
       }
       self.prevState();
       self.$container.show();
