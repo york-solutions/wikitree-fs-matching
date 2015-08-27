@@ -102,18 +102,27 @@
         <div class="list-group">
           <div class="list-group-item">
             <div class="row">
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 {{id}}
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div class="text-muted">Birth</div>
                 <div>{{birthDate}}</div>
                 <div>{{birthPlace}}</div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div class="text-muted">Death</div>
                 <div>{{deathDate}}</div>
                 <div>{{deathPlace}}</div>
+              </div>
+              <div class="col-sm-2">
+                <div class="text-muted">Parents</div>
+                <div>{{fatherName}}</div>
+                <div>{{motherName}}</div>
+              </div>
+              <div class="col-sm-2">
+                <div class="text-muted">Spouse</div>
+                <div>{{spouseName}}</div>
               </div>
             </div>
           </div>
@@ -136,21 +145,20 @@
     <script id="potential-match-template" type="text/x-handlebars-template">
       <div class="match potential-match">
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div><strong><a class="fs-link" href="{{ark}}" target="_blank">{{name}}</a></strong></div>
             <div class="text-muted">{{id}}</div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="text-muted">Birth</div>
             <div>{{birthDate}}</div>
             <div>{{birthPlace}}</div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="text-muted">Death</div>
             <div>{{deathDate}}</div>
             <div>{{deathPlace}}</div>
           </div>
-          <!--
           <div class="col-sm-2">
             <div class="text-muted">Parents</div>
             <div>{{fatherName}}</div>
@@ -160,8 +168,7 @@
             <div class="text-muted">Spouse</div>
             <div>{{spouseName}}</div>
           </div>
-          -->
-          <div class="col-sm-3 text-right">
+          <div class="col-sm-2 text-right">
             <select class="certainty">
               <option value="certain">Certain</option>
               <option value="uncertain">Uncertain</option>
@@ -175,7 +182,7 @@
     <script id="existing-match-template" type="text/x-handlebars-template">
       <div class="match existing-match">
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div>
               <strong><a class="fs-link" href="https://familysearch.org/tree/#view=ancestor&person={{id}}" target="_blank">
                 <img class="loader" src="ajax-loader-circle-ball-777-fff.gif" />
@@ -184,17 +191,17 @@
             <div class="text-muted">{{id}}</div>
             <div class="text-muted">{{certainty}}</div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="text-muted">Birth</div>
             <div class="birth-date"></div>
             <div class="birth-place"></div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-2">
             <div class="text-muted">Death</div>
             <div class="death-date"></div>
             <div class="death-place"></div>
           </div>
-          <div class="col-sm-3 text-right">
+          <div class="col-sm-2 col-sm-offset-4 text-right">
             <a class="text-danger remove-match" href><span class="glyphicon glyphicon-remove"></span> Remove Match</a>
           </div>
         </div>
@@ -205,7 +212,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.3/handlebars.min.js"></script>
-    <script src="//rawgit.com/justincy/wikitree-javascript-sdk/master/wikitree.js"></script>
+    <script src="wikitree.js"></script>
     <script src="//cdn.jsdelivr.net/familysearch-javascript-sdk/1.0.0/familysearch-javascript-sdk.min.js"></script>
     
     <script src="js/Watchlist.js"></script>

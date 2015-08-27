@@ -51,15 +51,23 @@ Watchlist.prototype.load = function(){
     limit: self.limit,
     order: self.order,
     offset: self.offset
-  }).done(function(persons){      
-    $.each(persons, function(i, person){
-      if(!person.isLiving()){
-        self.addWTPerson(person);
+  }).then(function(persons){      
+    
+    // Gather person IDs to make batch request to getRelatives endpoint
+    var ids = [];
+    for(var i = 0; i < persons.length; i++){
+      ids.push(persons[i].getId());
+    }
+    
+    wikitree.getRelatives(ids, true, true).then(function(persons){
+      for(var i = 0; i < ids.length; i++){
+        self.addWTPerson(persons[ids[i]]);
       }
+      self.prevState();
+      self.$container.show();
+      hideLoader();
     });
-    self.prevState();
-    self.$container.show();
-    hideLoader();
+    
   });
 };
 
