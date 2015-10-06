@@ -97,7 +97,11 @@
     <script id="watchlist-entry" type="text/x-handlebars-template">
       <div class="panel panel-default watchlist-entry">
         <div class="panel-heading">
-          <h3 class="panel-title"><a target="_blank" href="{{url}}">{{name}}</a></h3>
+          <h3 class="panel-title">
+            <a target="_blank" href="{{url}}">{{name}}</a> &nbsp; 
+            <a target="_blank" href="{{url}}"><small>[view]</small></a> 
+            <a target="_blank" href="{{editUrl}}"><small>[edit]</small></a>
+          </h3>
         </div>
         <div class="list-group">
           <div class="list-group-item">

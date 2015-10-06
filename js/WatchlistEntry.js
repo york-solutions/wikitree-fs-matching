@@ -23,6 +23,7 @@ WatchlistEntry.prototype.render = function(){
     name: person.getLongNamePrivate(),
     id: person.getName(),
     url: wikitree.API_DOMAIN + '/wiki/' + person.getName(),
+    editUrl: wikitree.API_DOMAIN + '/index.php?title=' + person.getName() + '&action=edit',
     birthDate: person.getBirthDateDisplay(),
     birthPlace: person.getBirthLocation(),
     deathDate: person.getDeathDateDisplay(),
