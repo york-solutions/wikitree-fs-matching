@@ -121,6 +121,10 @@ function fsMatchParams(wtPerson){
         deathPlace: wtPerson.getDeathLocation()
       };
       
+  if(wtPerson.getMiddleName()){
+    params.givenName += ' ' + wtPerson.getMiddleName();
+  }
+      
   addFSMatchParams(params, father, 'father');
   addFSMatchParams(params, mother, 'mother');
   addFSMatchParams(params, spouse, 'spouse');
