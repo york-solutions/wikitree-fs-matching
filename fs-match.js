@@ -113,7 +113,7 @@ function fsMatchParams(wtPerson){
       spouse = wtPerson.getSpouse(),
       params = {
         givenName: wtPerson.getFirstName(),
-        surname: wtPerson.getLastNameCurrent(),
+        surname: wtPerson.getLastNameAtBirth(),
         gender: wtPerson.getGender(),
         birthDate: wtPerson.getBirthDate(),
         birthPlace: wtPerson.getBirthLocation(),
