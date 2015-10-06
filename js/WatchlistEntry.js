@@ -20,16 +20,16 @@ WatchlistEntry.prototype.render = function(){
       mother = person.getMother(),
       spouse = person.getSpouse();
   self.$dom = $(WatchlistEntry.template({
-    name: person.getDisplayName(),
+    name: person.getLongNamePrivate(),
     id: person.getName(),
     url: wikitree.API_DOMAIN + '/wiki/' + person.getName(),
     birthDate: person.getBirthDateDisplay(),
     birthPlace: person.getBirthLocation(),
     deathDate: person.getDeathDateDisplay(),
     deathPlace: person.getDeathLocation(),
-    fatherName: father ? father.getDisplayName() : '',
-    motherName: mother ? mother.getDisplayName() : '',
-    spouseName: spouse ? spouse.getDisplayName() : ''
+    fatherName: father ? father.getLongNamePrivate() : '',
+    motherName: mother ? mother.getLongNamePrivate() : '',
+    spouseName: spouse ? spouse.getLongNamePrivate() : ''
   }));
   self.$searchButton = $('.fs-matches-btn', self.$dom).click(function(){
     self.getPossibleFSMatches();
