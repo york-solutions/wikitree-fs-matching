@@ -6,9 +6,7 @@ var fsClient = new FamilySearch({
   client_id: 'a0T3000000Bhy5yEAB',
   environment: 'production',
   save_access_token: true,
-  redirect_uri: document.location.href,
-  http_function: $.ajax,
-  deferred_function: $.Deferred
+  redirect_uri: document.location.href
 });
 
 var fsValidSession = false;
@@ -31,7 +29,7 @@ $(function(){
   $('#fsSignIn').click(fsSignIn);
     
   if(fsClient.hasAccessToken()){
-    fsGetUser().fail(enableFsSignIn);
+    fsGetUser().catch(enableFsSignIn);
   } else {
     enableFsSignIn();
   }
@@ -78,7 +76,7 @@ function wtLoggedIn(){
 
 function fsSignIn(){
   showLoader();
-  fsClient.getAccessToken().done(function(){
+  fsClient.getAccessToken().then(function(){
     fsGetUser();
   });
 };
@@ -87,10 +85,10 @@ function fsSignIn(){
  * Get the user's profile and enable the watchlist
  */
 function fsGetUser(){
-  return fsClient.getCurrentUser().done(function(response){
+  return fsClient.getCurrentUser().then(function(response){
     fsValidSession = true;
     hideLoader();
-    $('#fsUserName').text(response.getUser().contactName);
+    $('#fsUserName').text(response.getUser().getContactName());
     $('#fsSignedIn').show();
     $('#fsAuth').hide();
     wtWatchlistReady();
@@ -142,8 +140,8 @@ function addFSMatchParams(params, wtPerson, relation){
 function getFSPersonLastModified(fsId){
   var deferred = $.Deferred(),
       promise = fsClient.http('HEAD', '/platform/tree/persons/' + fsId + '?_breaker=' + Math.random());
-  promise.done(function(){
-    var date = new Date(promise.getResponseHeader('Last-Modified'));
+  promise.then(function(response){
+    var date = new Date(response.getHeader('Last-Modified'));
     if(!isNaN(date.getTime())) {
       deferred.resolve(date);
     } else {

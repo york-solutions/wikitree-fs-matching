@@ -4,8 +4,8 @@
 var Match = function(wtPerson, match){
   this.wtPerson = wtPerson;
   this.match = match;
-  this.fsPerson = match.$getPrimaryPerson();
-  this.fsId = this.fsPerson.id;
+  this.fsPerson = match.getPrimaryPerson();
+  this.fsId = this.fsPerson.getId();
   this.render();
 };
 
@@ -15,26 +15,26 @@ Match.prototype.render = function(){
   var self = this,
       person = self.fsPerson,
       data = {
-        name: person.$getDisplayName(),
-        id: person.id,
-        ark: person.identifiers['http://gedcomx.org/Persistent'][0],
-        birthDate: person.$getBirthDate(),
-        birthPlace: person.$getBirthPlace(),
-        deathDate: person.$getDeathDate(),
-        deathPlace: person.$getDeathPlace()
+        name: person.getDisplayName(),
+        id: person.getId(),
+        ark: person.getIdentifiers()['http://gedcomx.org/Persistent'][0],
+        birthDate: person.getBirthDate(),
+        birthPlace: person.getBirthPlace(),
+        deathDate: person.getDeathDate(),
+        deathPlace: person.getDeathPlace()
       };
       
-  if(this.match.$getFathers().length){
-    var father = this.match.$getFathers()[0];
-    data.fatherName = father.$getDisplayName();
+  if(this.match.getFathers().length){
+    var father = this.match.getFathers()[0];
+    data.fatherName = father.getDisplayName();
   }
-  if(this.match.$getMothers().length){
-    var mother = this.match.$getMothers()[0];
-    data.motherName = mother.$getDisplayName();
+  if(this.match.getMothers().length){
+    var mother = this.match.getMothers()[0];
+    data.motherName = mother.getDisplayName();
   }
-  if(this.match.$getSpouses().length){
-    var spouse = this.match.$getSpouses()[0];
-    data.spouseName = spouse.$getDisplayName();
+  if(this.match.getSpouses().length){
+    var spouse = this.match.getSpouses()[0];
+    data.spouseName = spouse.getDisplayName();
   }
   
   self.$dom = $(Match.template(data));      

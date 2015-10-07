@@ -27,13 +27,13 @@ ExistingMatch.prototype.render = function(){
 
 ExistingMatch.prototype.getFSPerson = function(){
   var self = this;
-  fsClient.getPerson(this.connection.mFSId).done(function(response){
+  fsClient.getPerson(this.connection.mFSId).then(function(response){
     var fsPerson = response.getPerson();
-    self.$dom.find('.fs-link').text(fsPerson.$getDisplayName());
-    self.$dom.find('.birth-date').text(fsPerson.$getBirthDate());
-    self.$dom.find('.birth-place').text(fsPerson.$getBirthPlace());
-    self.$dom.find('.death-date').text(fsPerson.$getDeathDate());
-    self.$dom.find('.death-place').text(fsPerson.$getDeathPlace());
+    self.$dom.find('.fs-link').text(fsPerson.getDisplayName());
+    self.$dom.find('.birth-date').text(fsPerson.getDisplayBirthDate());
+    self.$dom.find('.birth-place').text(fsPerson.getDisplayBirthPlace());
+    self.$dom.find('.death-date').text(fsPerson.getDisplayDeathDate());
+    self.$dom.find('.death-place').text(fsPerson.getDisplayDeathPlace());
     self.$dom.find('.loader').hide();
   });
 };

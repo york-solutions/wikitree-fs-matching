@@ -79,14 +79,15 @@ WatchlistEntry.prototype.removeWTMatch = function(fsId){
 WatchlistEntry.prototype.getPossibleFSMatches = function(){
   var self = this;
   self.$searchButton.button('loading');
-  this.fsConnectionsPromise.done(function(){
-    fsClient
-      .getPersonMatchesQuery(fsMatchParams(self.wtPerson))
-      .done(function(matchesResponse){
+  this.fsConnectionsPromise.then(function(){
+    fsClient.getPersonMatchesQuery(fsMatchParams(self.wtPerson))
+      .then(function(matchesResponse){
         self.fsMatches = matchesResponse.getSearchResults();
         self.renderFSMatches();
-      })
-      .always(function(){
+      }).then(function(){
+        self.$searchButton.remove();
+      }, function(e){
+        console.error(e.stack);
         self.$searchButton.remove();
       });
   });
@@ -103,11 +104,11 @@ WatchlistEntry.prototype.renderFSMatches = function(){
     existingFsIds[this.connections[i].mFSId] = true;
   }
   $.each(this.fsMatches, function(i, fsResult){
-    var resultId = fsResult.$getPrimaryPerson().id;
+    var resultId = fsResult.getPrimaryPerson().getId();
     
     // Ignore existing connections
     // Filter out low confidence matches
-    if(!existingFsIds[resultId] && fsResult.confidence >= self.fsConfidenceThreshold){
+    if(!existingFsIds[resultId] && fsResult.data.confidence >= self.fsConfidenceThreshold){
       $resultsTable.append(new Match(self.wtPerson, fsResult).getDOM());
       count++;
     }
