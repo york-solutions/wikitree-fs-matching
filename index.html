@@ -87,9 +87,18 @@
     <script id="watchlist" type="text/x-handlebars-template">
       <div class="watchlist-container"> 
         <div class="watchlist"></div>
-        <div class="wt-pagination">
-          <button class="btn btn-primary prev">&lt; Prev</button>
-          <button class="btn btn-primary next">Next &gt;</button>
+        <div class="form-inline wt-pagination">
+          <div class="btn-group">
+            <button class="btn btn-primary prev">&lt; Prev</button>
+            <button class="btn btn-primary next">Next &gt;</button>
+          </div>
+          <div class="input-group">
+            <input type="text" class="form-control page-input" value="1">
+            <div class="input-group-btn">
+              <button class="btn btn-default go">Go</button>
+            </div>
+          </div>
+          <span class="text-muted"><span class="total-pages"></span> total pages</span>
         </div>
       </div>
     </script>

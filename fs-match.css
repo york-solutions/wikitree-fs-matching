@@ -56,15 +56,16 @@
 }
 
 .wt-pagination {
-  overflow: auto;
+  text-align: center;
 }
 
-.wt-pagination .prev {
-  float: left;
+.wt-pagination .input-group {
+  margin: 0 15px;
 }
 
-.wt-pagination .next {
-  float: right;
+.wt-pagination .page-input {
+  width: 50px !important;
+  text-align: center;
 }
 
 #footer {
