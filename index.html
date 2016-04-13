@@ -87,9 +87,18 @@
     <script id="watchlist" type="text/x-handlebars-template">
       <div class="watchlist-container"> 
         <div class="watchlist"></div>
-        <div class="wt-pagination">
-          <button class="btn btn-primary prev">&lt; Prev</button>
-          <button class="btn btn-primary next">Next &gt;</button>
+        <div class="form-inline wt-pagination">
+          <div class="btn-group">
+            <button class="btn btn-primary prev">&lt; Prev</button>
+            <button class="btn btn-primary next">Next &gt;</button>
+          </div>
+          <div class="input-group">
+            <input type="text" class="form-control page-input" value="1">
+            <div class="input-group-btn">
+              <button class="btn btn-default go">Go</button>
+            </div>
+          </div>
+          <span class="text-muted"><span class="total-pages"></span> total pages</span>
         </div>
       </div>
     </script>
@@ -97,13 +106,17 @@
     <script id="watchlist-entry" type="text/x-handlebars-template">
       <div class="panel panel-default watchlist-entry">
         <div class="panel-heading">
-          <h3 class="panel-title"><a target="_blank" href="{{url}}">{{name}}</a></h3>
+          <h3 class="panel-title">
+            <a target="_blank" href="{{url}}">{{name}}</a> &nbsp; 
+            <a target="_blank" href="{{url}}"><small>[view]</small></a> 
+            <a target="_blank" href="{{editUrl}}"><small>[edit]</small></a>
+          </h3>
         </div>
         <div class="list-group">
           <div class="list-group-item">
             <div class="row">
               <div class="col-sm-2">
-                {{id}}
+                <span class="text-muted">{{id}}</span>
               </div>
               <div class="col-sm-2">
                 <div class="text-muted">Birth</div>
@@ -201,7 +214,16 @@
             <div class="death-date"></div>
             <div class="death-place"></div>
           </div>
-          <div class="col-sm-2 col-sm-offset-4 text-right">
+          <div class="col-sm-2">
+            <div class="text-muted">Parents</div>
+            <div class="father-name"></div>
+            <div class="mother-name"></div>
+          </div>
+          <div class="col-sm-2">
+            <div class="text-muted">Spouse</div>
+            <div class="spouse-name"></div>
+          </div>
+          <div class="col-sm-2 text-right">
             <a class="text-danger remove-match" href><span class="glyphicon glyphicon-remove"></span> Remove Match</a>
           </div>
         </div>
@@ -213,7 +235,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="//cdn.jsdelivr.net/handlebarsjs/3.0.3/handlebars.min.js"></script>
     <script src="wikitree.js"></script>
-    <script src="//cdn.jsdelivr.net/familysearch-javascript-sdk/1.0.0/familysearch-javascript-sdk.min.js"></script>
+    <script src="//cdn.jsdelivr.net/familysearch-javascript-sdk/2.1.0/familysearch-javascript-sdk.min.js"></script>
     
     <script src="js/Watchlist.js"></script>
     <script src="js/WatchlistEntry.js"></script>

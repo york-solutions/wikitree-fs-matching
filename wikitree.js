@@ -89,12 +89,24 @@ Person.prototype.getFirstName = function(){
   return this._data.FirstName;
 };
 
+Person.prototype.getMiddleName = function(){
+  return this._data.MiddleName;
+};
+
 Person.prototype.getLastNameCurrent = function(){
   return this._data.LastNameCurrent;
 };
 
+Person.prototype.getLastNameAtBirth = function(){
+  return this._data.LastNameAtBirth;
+};
+
 Person.prototype.getDisplayName = function(){
   return this.getFirstName() + ' ' + this.getLastNameCurrent();
+};
+
+Person.prototype.getLongNamePrivate = function(){
+  return this._data.LongNamePrivate;
 };
 
 Person.prototype.getGender = function(){
@@ -264,7 +276,7 @@ Person.prototype.setChildren = function(children){
  */
 var months = [
   'January',
-  'Februrary',
+  'February',
   'March',
   'April',
   'May',
@@ -467,7 +479,10 @@ wikitree.getWatchlist = function(params){
     utils.each(response[0].watchlist, function(person, i){
       persons.push(new wikitree.Person(person));
     });
-    return persons;
+    return {
+      list: persons,
+      total: response[0].watchlistCount
+    };
   });
 };
 
