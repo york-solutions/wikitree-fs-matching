@@ -5,13 +5,13 @@
  */
 var Watchlist = function(selector){
   this.$container = $(selector);
-  
+
   this.entries = {};
   this.offset = 0;
   this.limit = 25;
   this.total = 0;
   this.order = 'user_last_name_current';
-  
+
   this.render();
   this.load();
 };
@@ -46,7 +46,7 @@ Watchlist.prototype.prev = function(){
 };
 
 Watchlist.prototype.go = function(page){
-  var page = parseInt(page, 10) || 1;
+  page = parseInt(page, 10) || 1;
   this.offset = (page - 1) * 25;
   this.load();
 };
@@ -57,7 +57,7 @@ Watchlist.prototype.load = function(){
   self.$list.html('');
   showLoader();
   this.entries = {};
-  
+
   wikitree.getWatchlist({
     getSpace: 0,
     excludeLiving: 1,
@@ -65,16 +65,16 @@ Watchlist.prototype.load = function(){
     order: self.order,
     offset: self.offset
   }).then(function(response){
-    
+
     self.total = response.total;
     self.updatePager();
-    
+
     // Gather person IDs to make batch request to getRelatives endpoint
     var ids = [];
     for(var i = 0; i < response.list.length; i++){
       ids.push(response.list[i].getId());
     }
-    
+
     wikitree.getRelatives(ids, true, true).then(function(persons){
       for(var i = 0; i < ids.length; i++){
         self.addWTPerson(persons[ids[i]]);
@@ -82,7 +82,7 @@ Watchlist.prototype.load = function(){
       self.$container.show();
       hideLoader();
     });
-    
+
   });
 };
 
@@ -91,13 +91,13 @@ Watchlist.prototype.updatePager = function(){
 
   // Calculate current page
   this.$page.val(Math.ceil((this.offset + 1) / this.limit));
-  
+
   if(this.offset === 0){
     this.$prev.attr('disabled', 'disabled');
   } else {
     this.$prev.attr('disabled', false);
   }
-  
+
   if(this.offset + this.limit >= this.total){
     this.$next.attr('disabled', 'disabled');
   } else {

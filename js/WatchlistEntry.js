@@ -52,10 +52,10 @@ WatchlistEntry.prototype.renderWTMatches = function(){
   var $existingResults = self.$dom.find('.existing-match-results').html('');
   var $noMatchesMessage = self.$dom.find('.no-existing-matches-message').hide();
   if(this.connections.length === 0){
-    $noMatchesMessage.show();  
+    $noMatchesMessage.show();
   } else {
     for(var i = 0; i < this.connections.length; i++){
-      $existingResults.append(new ExistingMatch(this.connections[i]).getDOM());
+      $existingResults.append(new ExistingMatch(this.connections[i], this.wtPerson).getDOM());
     }
   }
 };
@@ -105,7 +105,7 @@ WatchlistEntry.prototype.renderFSMatches = function(){
   }
   $.each(this.fsMatches, function(i, fsResult){
     var resultId = fsResult.getPrimaryPerson().getId();
-    
+
     // Ignore existing connections
     // Filter out low confidence matches
     if(!existingFsIds[resultId] && fsResult.data.confidence >= self.fsConfidenceThreshold){

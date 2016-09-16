@@ -19,21 +19,21 @@ $(function(){
   wikitree.API_KEY = 'York1423-1';
   wikitree.API_CODE = 'CaePaith4B';
 
-  wikitree.checkLogin({}).then(function() { 
-    if (wikitree.session.loggedIn) { 
+  wikitree.checkLogin({}).then(function() {
+    if (wikitree.session.loggedIn) {
       wtLoggedIn();
     }
     hideLoader();
   });
 
   $('#fsSignIn').click(fsSignIn);
-    
+
   if(fsClient.hasAccessToken()){
     fsGetUser().catch(enableFsSignIn);
   } else {
     enableFsSignIn();
   }
-  
+
   $('#wtSignInBtn').click(function(){
     showLoader();
     wikitree.login({
@@ -41,7 +41,7 @@ $(function(){
       password: $('#wtPassword').val()
     }).done(wtLoggedIn);
   });
-    
+
 });
 
 /**
@@ -53,7 +53,7 @@ function enableFsSignIn(){
     .removeClass('disabled')
     .prop('disabled', false)
     .html('Sign In');
-};
+}
 
 /**
  * Check whether we are signed in with both
@@ -61,7 +61,7 @@ function enableFsSignIn(){
  */
 function isReady(){
   return fsValidSession && wikitree.session.loggedIn;
-};
+}
 
 /**
  * Update page with WikiTree login succeeds
@@ -72,14 +72,14 @@ function wtLoggedIn(){
   $('#wtSignedIn').show();
   hideLoader();
   wtWatchlistReady();
-};
+}
 
 function fsSignIn(){
   showLoader();
   fsClient.getAccessToken().then(function(){
     fsGetUser();
   });
-};
+}
 
 /**
  * Get the user's profile and enable the watchlist
@@ -93,7 +93,7 @@ function fsGetUser(){
     $('#fsAuth').hide();
     wtWatchlistReady();
   });
-};
+}
 
 /**
  * Show watchlist ready div when we're ready
@@ -103,7 +103,7 @@ function wtWatchlistReady(){
     $('#wtWatchlistNoauth').hide();
     watchlist = new Watchlist('#wtWatchlistWrapper');
   }
-};
+}
 
 function fsMatchParams(wtPerson){
   var father = wtPerson.getFather(),
@@ -118,24 +118,24 @@ function fsMatchParams(wtPerson){
         deathDate: wtPerson.getDeathDate(),
         deathPlace: wtPerson.getDeathLocation()
       };
-      
+
   if(wtPerson.getMiddleName()){
     params.givenName += ' ' + wtPerson.getMiddleName();
   }
-      
+
   addFSMatchParams(params, father, 'father');
   addFSMatchParams(params, mother, 'mother');
   addFSMatchParams(params, spouse, 'spouse');
-      
+
   return params;
-};
+}
 
 function addFSMatchParams(params, wtPerson, relation){
   if(wtPerson){
     params[relation + 'GivenName'] = wtPerson.getFirstName();
     params[relation + 'Surname'] = wtPerson.getLastNameCurrent();
   }
-};
+}
 
 function getFSPersonLastModified(fsId){
   var deferred = $.Deferred(),
@@ -149,12 +149,46 @@ function getFSPersonLastModified(fsId){
     }
   });
   return deferred.promise();
-};
+}
 
 function showLoader(){
   $('#loader').show();
-};
+}
 
 function hideLoader(){
   $('#loader').hide();
-};
+}
+
+/**
+ * Generate and submit a form with the source data that will be attached.
+ * The form is removed from the DOM after it's submitted.
+ * @param {Object} data {pid, title, notes, citation}
+ */
+function fsAttachSubmitForm(data){
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://familysearch.org/links-pages/sourceCA?cid=a0T3000000Bhy5yEAB&mode=import&personId=' + data.pid;
+  form.target = '_blank';
+
+  var input;
+  for(var name in data){
+    input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = name;
+    input.value = data[name];
+    form.appendChild(input);
+  }
+
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+}
+
+var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+function getDateString(){
+  var date = new Date();
+  return date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
+}

@@ -1,8 +1,9 @@
 /**
  * Manage the DOM for an existing WT->FS match
  */
-var ExistingMatch = function(connection){
+var ExistingMatch = function(connection, wtPerson){
   this.connection = connection;
+  this.wtPerson = wtPerson;
   this.render();
   this.getFSPerson();
 };
@@ -21,6 +22,16 @@ ExistingMatch.prototype.render = function(){
     wikitree.removePersonFSConnection(self.connection.mUserId, self.connection.mFSId).done(function(){
       self.$dom.remove();
       watchlist.getEntry(self.connection.mUserId).removeWTMatch(self.connection.mFSId);
+    });
+  });
+  self.$dom.find('.fs-attach').click(function(event){
+    event.preventDefault();
+    var url = 'http://www.wikitree.com/wiki/' + self.wtPerson.getName();
+    fsAttachSubmitForm({
+      pid: self.connection.mFSId,
+      title: self.wtPerson.getLongNamePrivate() + ' in WikiTree',
+      url: url,
+      citation: 'Wikitree contibutors, "' + self.wtPerson.getLongNamePrivate() + '", WikiTree, ' + url + ' (accessed ' + getDateString() + ')'
     });
   });
 };
