@@ -6,6 +6,7 @@ var ExistingMatch = function(connection, wtPerson){
   this.wtPerson = wtPerson;
   this.render();
   this.getFSPerson();
+  this.getSources();
 };
 
 ExistingMatch.template = Handlebars.compile($('#existing-match-template').html());
@@ -26,12 +27,12 @@ ExistingMatch.prototype.render = function(){
   });
   self.$dom.find('.fs-attach').click(function(event){
     event.preventDefault();
-    var url = 'http://www.wikitree.com/wiki/' + self.wtPerson.getName();
+    var url = wtProfileUrl(self.wtPerson);
     fsAttachSubmitForm({
       pid: self.connection.mFSId,
-      title: self.wtPerson.getLongNamePrivate() + ' in WikiTree',
+      title: self.wtPerson.getLongNamePrivate() + ' on WikiTree',
       url: url,
-      citation: 'Wikitree contibutors, "' + self.wtPerson.getLongNamePrivate() + '", WikiTree, ' + url + ' (accessed ' + getDateString() + ')'
+      citation: 'WikiTree contributors, "' + self.wtPerson.getLongNamePrivate() + '", WikiTree, ' + url + ' (accessed ' + getDateString() + ')'
     });
   });
 };
@@ -58,6 +59,25 @@ ExistingMatch.prototype.getFSPerson = function(){
       self.$dom.find('.spouse-name').text(spouses[0].getDisplayName());
     }
     self.$dom.find('.loader').hide();
+  });
+};
+
+/**
+ * Check to see whether a wikitree sources has already been attached
+ */
+ExistingMatch.prototype.getSources = function(){
+  var self = this;
+  fsClient.getSourcesQuery('/platform/tree/persons/' + this.connection.mFSId + '/sources').then(function(response){
+    var linked = false,
+        url = wtProfileUrl(self.wtPerson);
+    response.getSourceDescriptions().forEach(function(source){
+      if(source.getAbout() === url){
+        linked = true;
+      }
+    });
+    if(!linked){
+      self.$dom.find('.fs-attach').show();
+    }
   });
 };
 

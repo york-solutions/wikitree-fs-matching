@@ -159,6 +159,14 @@ function hideLoader(){
   $('#loader').hide();
 }
 
+//
+// Utility functions
+//
+
+function wtProfileUrl(wtPerson){
+  return 'http://www.wikitree.com/wiki/' + wtPerson.getName();
+}
+
 /**
  * Generate and submit a form with the source data that will be attached.
  * The form is removed from the DOM after it's submitted.

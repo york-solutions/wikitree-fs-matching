@@ -10,13 +10,13 @@
   margin-bottom: 0;
 }
 
-#wtWatchlistReady, 
+#wtWatchlistReady,
 #wtSignedIn,
 #fsSignedIn {
   display: none;
 }
 
-#loader { 
+#loader {
   margin: 32px 0;
   text-align: center;
 }
@@ -53,6 +53,10 @@
 
 .certainty {
   margin-bottom: 10px;
+}
+
+.fs-attach {
+  display: none;
 }
 
 .wt-pagination {
