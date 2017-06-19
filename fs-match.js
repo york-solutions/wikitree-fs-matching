@@ -178,18 +178,42 @@ function fsAttachSubmitForm(data){
   form.action = 'https://familysearch.org/links-pages/sourceCA?cid=wikitree-a0T3000000Bhy5yEAB&mode=import&personId=' + data.pid;
   form.target = '_blank';
 
-  var input;
   for(var name in data){
-    input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = name;
-    input.value = data[name];
-    form.appendChild(input);
+    form.appendChild(hiddenInput(name, data[name]));
   }
 
   document.body.appendChild(form);
   form.submit();
   form.remove();
+}
+
+/**
+ * Generate and submit a form POSTs to the WikiTree merge-edit page.
+ * The form is removed from the DOM after it's submitted.
+ * @param {String} wtPersonId
+ * @param {Object} gedcomx
+ */
+function wikiTreeMergeEditForm(wtPersonId, gedcomx){
+  var form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://www.wikitree.com/wiki/Special:MergeEdit';
+  form.target = '_blank';
+
+  // form.appendChild(hiddenInput('wtId', wtPersonId));
+  form.appendChild(hiddenInput('wtUsername', wtPersonId));
+  form.appendChild(hiddenInput('data', JSON.stringify(gedcomx)));
+
+  document.body.appendChild(form);
+  form.submit();
+  form.remove();
+}
+
+function hiddenInput(name, value){
+  var input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = name;
+  input.value = value;
+  return input;
 }
 
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',

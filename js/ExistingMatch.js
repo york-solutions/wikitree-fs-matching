@@ -4,6 +4,7 @@
 var ExistingMatch = function(connection, wtPerson){
   this.connection = connection;
   this.wtPerson = wtPerson;
+  this.fsPersonResponse = null;
   this.render();
   this.getFSPerson();
   this.getSources();
@@ -35,11 +36,16 @@ ExistingMatch.prototype.render = function(){
       citation: 'WikiTree contributors, "' + self.wtPerson.getLongNamePrivate() + '", WikiTree, ' + url + ' (accessed ' + getDateString() + ')'
     });
   });
+  self.$dom.find('.wikitree-merge').click(function(event){
+    event.preventDefault();
+    wikiTreeMergeEditForm(self.wtPerson.getName(), self.fsPersonResponse.getData());
+  });
 };
 
 ExistingMatch.prototype.getFSPerson = function(){
   var self = this;
   fsClient.getPersonWithRelationships(this.connection.mFSId, {persons: true}).then(function(response){
+    self.fsPersonResponse = response;
     var fsPerson = response.getPrimaryPerson(),
         fathers = response.getFathers(),
         mothers = response.getMothers(),
