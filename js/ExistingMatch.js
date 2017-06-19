@@ -38,7 +38,7 @@ ExistingMatch.prototype.render = function(){
   });
   self.$dom.find('.wikitree-merge').click(function(event){
     event.preventDefault();
-    wikiTreeMergeEditForm(self.wtPerson.getName(), self.fsPersonResponse.getData());
+    wikiTreeMergeEditForm(self.wtPerson.getId(), self.fsPersonResponse.getData());
   });
 };
 

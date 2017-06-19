@@ -199,8 +199,7 @@ function wikiTreeMergeEditForm(wtPersonId, gedcomx){
   form.action = 'https://www.wikitree.com/wiki/Special:MergeEdit';
   form.target = '_blank';
 
-  // form.appendChild(hiddenInput('wtId', wtPersonId));
-  form.appendChild(hiddenInput('wtUsername', wtPersonId));
+  form.appendChild(hiddenInput('id', wtPersonId));
   form.appendChild(hiddenInput('data', JSON.stringify(gedcomx)));
 
   document.body.appendChild(form);
