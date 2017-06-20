@@ -63,6 +63,35 @@ ExistingMatch.prototype.render = function(){
       }
     });
 
+    // Add the agent so that WikiTree knows which site it's coming from and can display the site name
+    if(!Array.isArray(gedcomx.agents)){
+      gedcomx.agents = [];
+    }
+    gedcomx.agents.push({
+      id: 'agent',
+      names: [{
+        lang: 'en',
+        value: 'FamilySearch Family Tree'
+      }],
+      homepage: {
+        resource: 'https://familysearch.org/tree'
+      }
+    });
+
+    // Link the source description to the agent
+    if(Array.isArray(gedcomx.sourceDescriptions)){
+      for(var i = 0; i < gedcomx.sourceDescriptions.length; i++){
+        if(gedcomx.sourceDescriptions[i].id === gedcomx.description.substring(1)){
+          gedcomx.sourceDescriptions[i].repository = {
+            resource: '#agent'
+          };
+        }
+      }
+    }
+
+    // Set the import summary
+    gedcomx.summary = 'Imported data from FamilySearch Family Tree ' + self.connection.mFSId + '.';
+
     wikiTreeMergeEditForm(self.wtPerson.getId(), gedcomx);
   });
 };

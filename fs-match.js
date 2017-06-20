@@ -194,6 +194,8 @@ function fsAttachSubmitForm(data){
  * @param {Object} gedcomx
  */
 function wikiTreeMergeEditForm(wtPersonId, gedcomx){
+  console.log(gedcomx);
+  
   var form = document.createElement('form');
   form.method = 'POST';
   form.action = 'https://www.wikitree.com/wiki/Special:MergeEdit';
