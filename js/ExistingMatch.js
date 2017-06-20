@@ -14,10 +14,14 @@ ExistingMatch.template = Handlebars.compile($('#existing-match-template').html()
 
 ExistingMatch.prototype.render = function(){
   var self = this;
+
+  // Render the DOM
   self.$dom = $(ExistingMatch.template({
     id: self.connection.mFSId,
     certainty: self.connection.mCertainty
   }));
+
+  // Setup event listener for removing a match
   self.$dom.find('.remove-match').click(function(event){
     event.preventDefault();
     self.$dom.find('.loader').show();
@@ -26,6 +30,8 @@ ExistingMatch.prototype.render = function(){
       watchlist.getEntry(self.connection.mUserId).removeWTMatch(self.connection.mFSId);
     });
   });
+
+  // Setup even listener for attaching a source to FS
   self.$dom.find('.fs-attach').click(function(event){
     event.preventDefault();
     var url = wtProfileUrl(self.wtPerson);
@@ -36,9 +42,28 @@ ExistingMatch.prototype.render = function(){
       citation: 'WikiTree contributors, "' + self.wtPerson.getLongNamePrivate() + '", WikiTree, ' + url + ' (accessed ' + getDateString() + ')'
     });
   });
+
+  // Setup an event listener for saving FS data to WikiTree
   self.$dom.find('.wikitree-merge').click(function(event){
     event.preventDefault();
-    wikiTreeMergeEditForm(self.wtPerson.getId(), self.fsPersonResponse.getData());
+
+    // We need to modify the data slightly so we first make a copy of it
+    var gedcomx = JSON.parse(JSON.stringify(self.fsPersonResponse.getData()));
+
+    // Mark the principal person and attach the document's source to them
+    gedcomx.persons.forEach(function(person){
+      if(person.id === self.connection.mFSId){
+        person.principal = true;
+        if(!Array.isArray(person.sources)){
+          person.sources = [];
+        }
+        person.sources.push({
+          description: gedcomx.description
+        });
+      }
+    });
+
+    wikiTreeMergeEditForm(self.wtPerson.getId(), gedcomx);
   });
 };
 
