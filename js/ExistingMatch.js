@@ -98,7 +98,7 @@ ExistingMatch.prototype.render = function(){
 
 ExistingMatch.prototype.getFSPerson = function(){
   var self = this;
-  fsClient.getPersonWithRelationships(this.connection.mFSId, {persons: true}).then(function(response){
+  fsClient.getPerson(this.connection.mFSId, {relatives: true}).then(function(response){
     self.fsPersonResponse = response;
     var fsPerson = response.getPrimaryPerson(),
         fathers = response.getFathers(),
