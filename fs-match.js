@@ -175,7 +175,7 @@ function wtProfileUrl(wtPerson){
 function fsAttachSubmitForm(data){
   var form = document.createElement('form');
   form.method = 'POST';
-  form.action = 'https://familysearch.org/links-pages/sourceCA?cid=wikitree-a0T3000000Bhy5yEAB&mode=import&personId=' + data.pid;
+  form.action = 'https://www.familysearch.org/links-pages/sourceCA?cid=wikitree-a0T3000000Bhy5yEAB&mode=import&personId=' + data.pid;
   form.target = '_blank';
 
   for(var name in data){
