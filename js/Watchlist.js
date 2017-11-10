@@ -60,7 +60,6 @@ Watchlist.prototype.load = function(){
 
   wikitree.getWatchlist({
     getSpace: 0,
-    excludeLiving: 1,
     limit: self.limit,
     order: self.order,
     offset: self.offset
